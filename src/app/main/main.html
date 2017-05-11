@@ -1,0 +1,16 @@
+<div class="container ng-cloak">
+
+    <div class="geckoboard">
+      <h2>A<span ng-bind="main.sum() | currency"></span></h2>
+
+      <div class="row">
+        <crypto-component ng-repeat="(key,value) in main.data track by $index"
+            class="col-xs-12" data="value" index="$index + 1">
+        </crypto-component>
+      </div>
+
+    </div>
+  </div></div></div>
+
+
+</div>

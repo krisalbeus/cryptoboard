@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+$grey: rgb(42,42,42);
+$light-grey: rgb(127,127,127);
+$black: rgb(0,0,0);
+$white: rgb(255,255,255);
+$green: rgb(144, 197, 100);
+$red: rgb(227, 82, 79);
+
+$font-stack: 'Roboto', sans-serif;
+
+// -----------------------------
+// Base Sytles
+// -----------------------------
+body {
+  color: $black;
+  font-family: $font-stack;
+  background-color: $white;
+}
+
+
+// -----------------------------
+// Bootstrap Overrides Sytles
+// -----------------------------
+.container {
+  width: 100%;
+}
+
+
+// -----------------------------
+// Custom Sytles
+// -----------------------------
+.geckoboard {
+  color: $light-grey;
+  background-color: $white;
+
+  h2 {
+    font-size: 3em;
+    font-weight: 500;
+    float: right;
+  }
+}
+.box {
+  display: flex;
+  width: 100%;
+  font-size: 1.5em;
+  padding: 5px 0;
+  border-top: 1px solid $light-grey;
+  justify-content: center;
+  text-align: center;
+
+  .index {
+    padding: 0 5px;
+    font-size: 80%;
+    line-height: 30px;
+  }
+
+  .currency {
+    color: $light-grey;
+    //border-left: 1px solid $light-grey;
+    padding: 3px 5px;
+  }
+  .price {
+    margin-left: auto;
+    border: 1px solid;
+    border-radius: 2px;
+    padding: 3px 2px;
+  }
+
+  .increased, .decreased {
+    margin-left: auto;
+
+    .suffix {
+      font-size: 1.5em;
+    }
+
+    .arrow {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      display: inline-block;
+    }
+  }
+
+  .increased {
+    color: $green;
+    .arrow {
+      border-bottom: 10px solid $green;
+    }
+  }
+
+  .decreased {
+    color: $red;
+   .arrow {
+      border-top: 10px solid $red;
+    }
+  }
+}
