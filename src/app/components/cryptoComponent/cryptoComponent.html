@@ -1,9 +1,9 @@
 <div class="box">
 
   <div class="currency">
-    <img src="http://www.coincap.io/images/coins/{{cryptoComponentVm.data.info.name}}.png" width="20px" />
+    <img src="https://www.coincap.io/images/coins/{{cryptoComponentVm.data.info.name}}.png" width="20px" />
     {{cryptoComponentVm.data.info.name}}
-    {{ cryptoComponentVm.data.currency }}
+    {{ cryptoComponentVm.data.short }}
   </div>
 
   <div class="price" ng-class="{'increased': cryptoComponentVm.data.increased, 'decreased': !cryptoComponentVm.data.increased}">
