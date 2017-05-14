@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController(cryptoService, fixerFxService, $filter, $timeout) {
+  function MainController(cryptoService, fixerFxService, krakenService, $filter, $timeout) {
     var vm = this;
     var audExchangeRate = 0;
 
@@ -18,27 +18,33 @@
     vm.currencies = {
       BTC: {
         quantity: 1.95639,
-        name: 'Bitcoin'
+        name: 'Bitcoin',
+        krakenKey: 'BTC'
       },
       ETH: {
         quantity: 92.25704,
-        name: 'Ethereum'
+        name: 'Ethereum',
+        krakenKey: 'ETH'
       },
       XRP: {
         quantity: 52094.54242,
-        name: 'Ripple'
+        name: 'Ripple',
+        krakenKey: 'XRP'
       },
       LTC: {
         quantity: 192.30769,
-        name: 'Litecoin'
+        name: 'Litecoin',
+        krakenKey: 'LTC'
       },
       DASH: {
         quantity: 97.83954,
-        name: 'Dash'
+        name: 'Dash',
+        krakenyKey: 'DASH'
       },
       ETC: {
         quantity: 1769.83335,
-        name: 'EthereumClassic'
+        name: 'EthereumClassic',
+        krakenKey: 'ETC'
       }
     };
 
@@ -46,27 +52,33 @@
     vm.currencies = {
       BTC: {
         quantity: 4.39939,
-        name: 'Bitcoin'
+        name: 'Bitcoin',
+        krakenKey: 'BTC'
       },
       ETH: {
         quantity: 92.25704,
-        name: 'Ethereum'
+        name: 'Ethereum',
+        krakenKey: 'ETH'
       },
       XRP: {
         quantity: 52094.54242,
-        name: 'Ripple'
+        name: 'Ripple',
+        krakenKey: 'XRP'
       },
       LTC: {
         quantity: 295.08033,
-        name: 'Litecoin'
+        name: 'Litecoin',
+        krakenKey: 'LTC'
       },
       DASH: {
         quantity: 97.83954,
-        name: 'Dash'
+        name: 'Dash',
+        krakenKey: 'DASH'
       },
       ETC: {
         quantity: 1769.83335,
-        name: 'EthereumClassic'
+        name: 'EthereumClassic',
+        krakenKey: 'ETC'
       }
     };
 
@@ -75,22 +87,29 @@
     // vm.currencies.ETC.quantity -= (74.49822 + 295.14893570);
 
     vm.data = {};
-    vm.updateSummary = function() {
-      cryptoService.getSummary(Object.keys(vm.currencies))
+    Object.keys(vm.currencies).forEach(function(currency) {
+      vm.data[currency] = {};
+    });
+
+    vm.updateKraken = function() {
+      krakenService.getSummary()
         .then(function(result) {
-          result.forEach(function(row) {
-            vm.data[row.short] = row;
-            vm.data[row.short].value = row.price * vm.currencies[row.short].quantity;
-            vm.data[row.short].info = vm.currencies[row.short];
+          Object.keys(result).forEach(function(key) {
+            var key2 = (key === 'XBT') ? 'BTC' : key;
+            var increased = false;
+            if(vm.data[key2].kraken) {
+              increased = vm.data[key2].kraken.b[0] < result[key].b[0];
+            }
+            vm.data[key2].kraken = result[key];
+            vm.data[key2].kraken.increased = increased;
+            vm.data[key2].value = result[key].b[0] * vm.currencies[key2].quantity;
           });
-
-          $timeout(vm.updateSummary, 5000);
-
-
+          $timeout(vm.updateKraken, 5000);
         });
     };
 
-    vm.updateSummary();
+    // vm.updateSummary();
+    vm.updateKraken();
 
     vm.sum = function() {
       var total = 0;

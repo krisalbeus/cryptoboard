@@ -5,7 +5,7 @@
 
       <div class="row">
         <crypto-component ng-repeat="(key,value) in main.data track by $index"
-            class="col-xs-12" data="value" index="$index + 1">
+            class="col-xs-12" info="main.currencies[key]" data="value" index="$index + 1">
         </crypto-component>
       </div>
 

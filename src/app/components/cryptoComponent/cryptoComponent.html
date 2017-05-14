@@ -1,13 +1,13 @@
 <div class="box">
 
   <div class="currency">
-    <img src="https://www.coincap.io/images/coins/{{cryptoComponentVm.data.info.name}}.png" width="20px" />
-    {{cryptoComponentVm.data.info.name}}
-    {{ cryptoComponentVm.data.short }}
+    <img src="https://www.coincap.io/images/coins/{{cryptoComponentVm.info.name}}.png" width="20px" />
+    {{cryptoComponentVm.info.name}}
+    {{cryptoComponentVm.info.krakenKey }}
   </div>
 
-  <div class="price" ng-class="{'increased': cryptoComponentVm.data.increased, 'decreased': !cryptoComponentVm.data.increased}">
-    {{ cryptoComponentVm.data.price | currency }}
+  <div class="price" ng-class="{'increased': cryptoComponentVm.data.kraken.increased, 'decreased': !cryptoComponentVm.data.kraken.increased}">
+    {{ cryptoComponentVm.data.kraken.b[0] | currency }}
   </div>
 
 </div>

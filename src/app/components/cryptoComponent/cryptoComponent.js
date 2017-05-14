@@ -9,7 +9,8 @@
     	controllerAs: 'cryptoComponentVm',
     	bindings: {
     		data: '<',
-        index: '<'
+        index: '<',
+        info: '<'
     	}
     });
 
