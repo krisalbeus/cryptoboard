@@ -17,7 +17,7 @@
 
     function getSummary() {
       var deferred = $q.defer();
-      var promise = $http.get('https://api.kraken.com/0/public/Ticker?pair=DASHUSD,XBTUSD,ETHUSD,ETCUSD,LTCUSD,XRPXBT');
+      var promise = $http.get('https://api.kraken.com/0/public/Ticker?pair=DASHUSD,XBTUSD,ETHUSD,ETCUSD,LTCUSD,XRPXBT,XLMUSD');
 
       promise.then(function(response) {
 

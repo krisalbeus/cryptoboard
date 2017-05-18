@@ -40,14 +40,22 @@ body {
     float: right;
   }
 }
+
+.info {
+  display: flex;
+  width: 100%;
+  font-size: 1em;
+  justify-content: center;
+}
 .box {
   display: flex;
   width: 100%;
-  font-size: 1.5em;
+  font-size: 1.3em;
   padding: 5px 0;
   border-top: 1px solid $light-grey;
   justify-content: center;
   text-align: center;
+  align-items: center;
 
   .index {
     padding: 0 5px;
@@ -60,6 +68,12 @@ body {
     //border-left: 1px solid $light-grey;
     padding: 3px 5px;
   }
+
+  .rate {
+    font-size: 0.75em;
+    margin-left: 10px;
+  }
+
   .price {
     margin-left: auto;
     border: 1px solid;
@@ -67,33 +81,39 @@ body {
     padding: 3px 2px;
   }
 
-  .increased, .decreased {
-    margin-left: auto;
 
-    .suffix {
-      font-size: 1.5em;
-    }
+}
 
-    .arrow {
-      width: 0;
-      height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      display: inline-block;
-    }
+//arrow
+.increased, .decreased {
+  .suffix {
+    font-size: 1.5em;
   }
 
-  .increased {
-    color: $green;
-    .arrow {
-      border-bottom: 10px solid $green;
-    }
+  .arrow {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    display: inline-block;
   }
 
-  .decreased {
-    color: $red;
-   .arrow {
-      border-top: 10px solid $red;
-    }
+  .total {
+    color: $light-grey;
   }
 }
+
+.increased {
+  color: $green;
+  .arrow {
+    border-bottom: 7px solid $green;
+  }
+}
+
+.decreased {
+  color: $red;
+  .arrow {
+    border-top: 7px solid $red;
+  }
+}
+

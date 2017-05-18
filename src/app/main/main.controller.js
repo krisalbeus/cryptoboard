@@ -8,77 +8,58 @@
   /** @ngInject */
   function MainController(cryptoService, fixerFxService, krakenService, $filter, $timeout) {
     var vm = this;
-    var audExchangeRate = 0;
+    var audExchangeRate = 1.35;
+    var deposit = 60000;
+    
+    vm.sum = 0;
 
     fixerFxService.getRate('USD', 'AUD').then(function(rate) {
       audExchangeRate = rate;
     });
-
-    //May 12, 2017 data
-    vm.currencies = {
-      BTC: {
-        quantity: 1.95639,
-        name: 'Bitcoin',
-        krakenKey: 'BTC'
-      },
-      ETH: {
-        quantity: 92.25704,
-        name: 'Ethereum',
-        krakenKey: 'ETH'
-      },
-      XRP: {
-        quantity: 52094.54242,
-        name: 'Ripple',
-        krakenKey: 'XRP'
-      },
-      LTC: {
-        quantity: 192.30769,
-        name: 'Litecoin',
-        krakenKey: 'LTC'
-      },
-      DASH: {
-        quantity: 97.83954,
-        name: 'Dash',
-        krakenyKey: 'DASH'
-      },
-      ETC: {
-        quantity: 1769.83335,
-        name: 'EthereumClassic',
-        krakenKey: 'ETC'
-      }
-    };
 
     // //After May 12 transactions
     vm.currencies = {
       BTC: {
         quantity: 4.39939,
         name: 'Bitcoin',
-        krakenKey: 'BTC'
+        krakenKey: 'BTC',
+        fractionSize: 2
       },
       ETH: {
         quantity: 92.25704,
         name: 'Ethereum',
-        krakenKey: 'ETH'
+        krakenKey: 'ETH',
+        fractionSize: 2
       },
       XRP: {
         quantity: 52094.54242,
         name: 'Ripple',
-        krakenKey: 'XRP'
+        krakenKey: 'XRP',
+        fractionSize: 4
       },
       LTC: {
         quantity: 295.08033,
         name: 'Litecoin',
-        krakenKey: 'LTC'
+        krakenKey: 'LTC',
+        fractionSize: 2
       },
       DASH: {
         quantity: 97.83954,
         name: 'Dash',
-        krakenKey: 'DASH'
+        krakenKey: 'DASH',
+        fractionSize: 2
       },
       ETC: {
         quantity: 1769.83335,
         name: 'EthereumClassic',
-        krakenKey: 'ETC'
+        krakenKey: 'ETC',
+        fractionSize: 2
+      },
+      XLM: {
+        quantity: 0,
+        name: 'StellarLumens',
+        krakenKey: 'XLM',
+        fractionSize: 4
       }
     };
 
@@ -91,6 +72,16 @@
       vm.data[currency] = {};
     });
 
+    vm.updateSummary = function() {
+      cryptoService.getSummary(Object.keys(vm.currencies))
+        .then(function(result) {
+          result.forEach(function(row) {
+            vm.data[row.short].coincap = row;
+          });
+          $timeout(vm.updateSummary, 10000);
+        });
+    };
+
     vm.updateKraken = function() {
       krakenService.getSummary()
         .then(function(result) {
@@ -102,21 +93,22 @@
             }
             vm.data[key2].kraken = result[key];
             vm.data[key2].kraken.increased = increased;
-            vm.data[key2].value = result[key].b[0] * vm.currencies[key2].quantity;
+            vm.data[key2].value = result[key].b[0] * vm.currencies[key2].quantity * audExchangeRate;
           });
+          vm.computeTotal();
           $timeout(vm.updateKraken, 5000);
         });
     };
 
-    // vm.updateSummary();
+    vm.updateSummary();
     vm.updateKraken();
 
-    vm.sum = function() {
+    vm.computeTotal = function() {
       var total = 0;
       angular.forEach(vm.data, function(data) {
         total += data.value;
       });
-      return audExchangeRate * total;
+      vm.sum = total - deposit;
     };
 
   }

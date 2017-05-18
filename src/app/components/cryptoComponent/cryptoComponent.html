@@ -6,8 +6,23 @@
     {{cryptoComponentVm.info.krakenKey }}
   </div>
 
-  <div class="price" ng-class="{'increased': cryptoComponentVm.data.kraken.increased, 'decreased': !cryptoComponentVm.data.kraken.increased}">
-    {{ cryptoComponentVm.data.kraken.b[0] | currency }}
+
+
+  <div class="rate" ng-if="cryptoComponentVm.data.coincap" ng-class="{'increased': cryptoComponentVm.data.coincap.increased, 'decreased': !cryptoComponentVm.data.coincap.increased}">
+    <div class="arrow"></div> {{ cryptoComponentVm.data.coincap.rate | number: 2 }}%
+  </div>
+
+  <div class="price" ng-if="cryptoComponentVm.data.kraken" ng-class="{'increased': cryptoComponentVm.data.coincap.increased, 'decreased': !cryptoComponentVm.data.coincap.increased}">
+    {{ cryptoComponentVm.data.kraken.b[0] | currency : '$' : cryptoComponentVm.info.fractionSize }}
   </div>
 
 </div>
+
+
+
+<!--<div class="info">-->
+  <!--<label>-->
+    <!--Value:-->
+  <!--</label>-->
+  <!--<div class="value">{{ cryptoComponentVm.data.value | currency }}</div>-->
+<!--</div>-->

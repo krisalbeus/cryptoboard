@@ -19,13 +19,14 @@
 
     function getSummary(currencies) {
       var deferred = $q.defer();
+
       var promise = $http.get('https://www.coincap.io/front');
       promise.then(function(response) {
         var data = response.data.filter(function(row) {
           return currencies.indexOf(row.short) >= 0;
         }).map(function(row) {
-          row.increased = parseFloat(row.cap24hrChangePercent) > 0;
-          row.rate = Math.abs(row.cap24hrChangePercent);
+          row.increased = parseFloat(row.cap24hrChange) > 0;
+          row.rate = (row.increased ? 1 : -1) * parseFloat(row.cap24hrChange);
           return row;
         });
         deferred.resolve(data);
