@@ -9,18 +9,17 @@
   function MainController(cryptoService, fixerFxService, krakenService, $filter, $timeout) {
     var vm = this;
     var audExchangeRate = 1.35;
-    var deposit = 60000;
-    
+    var deposit = 70000;
+
     vm.sum = 0;
 
     fixerFxService.getRate('USD', 'AUD').then(function(rate) {
       audExchangeRate = rate;
     });
 
-    // //After May 12 transactions
     vm.currencies = {
       BTC: {
-        quantity: 4.39939,
+        quantity: 4.39281,
         name: 'Bitcoin',
         krakenKey: 'BTC',
         fractionSize: 2
@@ -56,16 +55,12 @@
         fractionSize: 2
       },
       XLM: {
-        quantity: 0,
+        quantity: 142769.94649,
         name: 'StellarLumens',
         krakenKey: 'XLM',
         fractionSize: 4
       }
     };
-
-    // vm.currencies.BTC.quantity += 1.40195744;
-    // vm.currencies.ETH.quantity += 6.36959781;
-    // vm.currencies.ETC.quantity -= (74.49822 + 295.14893570);
 
     vm.data = {};
     Object.keys(vm.currencies).forEach(function(currency) {
